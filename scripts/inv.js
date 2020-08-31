@@ -81,19 +81,35 @@ class Inv{
  
    addItem(theItem){
        
-       if (theItem.size < this.maxSize && 
-           this.curCapacity + 1 < this.maxCapacity && 
-           (this.curWeight + theItem.weight < this.maxWeight)){
+       if ( (theItem.size < this.maxSize)  &&   // checks if the item size lt maxsize
+           (this.curCapacity + 1 < this.maxCapacity) && // capacity of container + 1 lt maxCap
+           (this.curWeight + theItem.weight < this.maxWeight) ){
            
             this.items.push(theItem);    
             displayOutput("Added: "+ theItem.name + " to "+ this.name);
+            this.curWeight += theItem.weight;
+            this.curCapacity += 1;
+           
+           
        } else {
            displayOutput("Cannot add "+ theItem.name + " to "+ this.name);
        }
        
    }
     
-   
+   display(){
+       var dispalyStr = this.name + ":<br/>";
+       dispalyStr += "There are " + this.items.length + " items in " + this.name +"<br/>";
+       if (this.items.length != 0){
+           dispalyStr += "<ul>";
+           for (var i = 0; i < this.items.length; i++){
+               dispalyStr += "<li>"+ this.items[i].name + "</li>";
+           }
+           dispalyStr += "</ul>";
+       }
+       
+       displayOutput(dispalyStr)
+   }
     
     
 }
@@ -110,5 +126,8 @@ sword = new Item("A basic sword", "this sword is very rusty", 10,
 
 potion = new Item("A health potion", "this potion looks green and glows", 150, 'common', 1,1,1,"basic health", "coffee-cup.png", "food");
 
-
+inv = new Inv("bag", 10,10,10);
+inv.addItem(sword);
+inv.addItem(potion);
+inv.display();
 
