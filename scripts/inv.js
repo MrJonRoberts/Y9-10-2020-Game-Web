@@ -1,4 +1,4 @@
-
+// updated 31-09-20
 // inventory system
 /*
     the inventory is a list of itmes that we can:
@@ -78,6 +78,21 @@ class Inv{
         this.display();
     }
     
+ 
+   addItem(theItem){
+       
+       if (theItem.size < this.maxSize && 
+           this.curCapacity + 1 < this.maxCapacity && 
+           (this.curWeight + theItem.weight < this.maxWeight)){
+           
+            this.items.push(theItem);    
+            displayOutput("Added: "+ theItem.name + " to "+ this.name);
+       } else {
+           displayOutput("Cannot add "+ theItem.name + " to "+ this.name);
+       }
+       
+   }
+    
    
     
     
@@ -86,6 +101,7 @@ class Inv{
 
 function displayOutput(msg){
     console.log(msg);
+    $("#message").append(msg + "<br/>");
 }
 
 sword = new Item("A basic sword", "this sword is very rusty", 10, 
