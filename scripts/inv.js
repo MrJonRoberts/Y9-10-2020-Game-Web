@@ -49,20 +49,24 @@ class Item{
         this.type = type; 
         this.uuid = this.guid();
        
-        displayOutput("Created "+ this.name);
+        displayOutput("Created "+ this.name );//+ " uuid "+ this.uuid);
         
         
     }
-//    guid(){
-//        return    'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
-//        var r = Math.random() * 16 | 0, v = c == 'x' ? r : (r & 0x3 | 0x8);
-//        return v.toString(16);
-//    });
-//    }
+    guid(){
+        return    'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
+        var r = Math.random() * 16 | 0, v = c == 'x' ? r : (r & 0x3 | 0x8);
+        
+        return v.toString(16);
+    });
+    }
     
-//     getImage(){
-//       return "<img class='icon' id='' width='25px' src='images/icons/"+this.type + "/"+this.icon + ">"
-//   }
+    getImage(){
+       return "<img class='icon' id='"+this.uuid+"' width='25px' src='images/icons/"+this.type + "/"+this.icon + "'>"
+   }
+    display(){
+        return this.name + "<br/>" + this.desc + "<br/> size: "+this.size + "<br/>weight: "+this.weight + "<br/>vol:" +this.vol + "<br/> quality: "+this.quality; 
+    }
     
  }
 
@@ -104,23 +108,35 @@ class Inv{
            
            
        } else {
+           
            displayOutput("Cannot add "+ theItem.name + " to "+ this.name);
+           
+           if (theItem.size > this.maxSize){
+               displayOutput(theItem.name + " is too big");
+           }
+           if (theItem.weight + this.curWeight > this.maxWeight){
+               displayOutput(theItem.name + " is too heavy");
+           }
+           if (this.curCapacity + 1 >this.maxCapacity){
+               displayOutput(this.name + " is too full");
+           }
        }
        
    }
     
-   display(){
+   display(clear){
        var dispalyStr = this.name + ":<br/>";
        dispalyStr += "There are " + this.items.length + " items in " + this.name +"<br/>";
        if (this.items.length != 0){
            dispalyStr += "<ul>";
            for (var i = 0; i < this.items.length; i++){
-               dispalyStr += "<li>"+    this.getImage() + " "+ this.items[i].name + "</li>";
+               dispalyStr += "<li>"+    this.items[i].getImage() + " "+
+                   this.items[i].name + "</li>";
            }
-           dispalyStr += "</ul>";
+            dispalyStr += "</ul>";
        }
        
-       displayOutput(dispalyStr)
+       displayOutput(dispalyStr,clear)
    }
     
   
@@ -129,9 +145,14 @@ class Inv{
 }
 
 
-function displayOutput(msg){
-    console.log(msg);
-    $("#message").append(msg + "<br/>");
+function displayOutput(msg, clear){
+    if (clear == true){
+        $("#message").html(msg + "<br/>");
+
+    } else {
+        $("#message").append(msg + "<br/>");
+
+    }
 }
 
 
@@ -139,39 +160,41 @@ function displayOutput(msg){
 // 1.  function to run
 // 2.  add function to events.
 //1
-//function createItem(){
-//    displayOutput("Creating Item");
-//    
-//    // random weapon
-//    //constructor(name, desc, value, quality, size, weight, vol, effect, icon, type)
-//    var name = "Sword of Truth";
-//    var desc = "This is a random sword";
-//    var value = Math.floor(Math.random()* 400 +1);
-//    var quality = "Random Quality - Poor, Common, Uncommon, Rare, Epic, Legendary";
-//    var size = Math.floor(Math.random() * 3 +1);
-//    var weight = Math.floor(Math.random() * 2 + 1);
-//    var vol = 1;
-//    var effect = "Random Effect";
-//    var icon = "sword-brandish.png";
-//    var type = "weapon";
-//    
-//    var weapon = new Item(name, desc, value, quality, size, weapon, vol, effect, icon, type);
-//    
-//    displayOutput("Created "+ weapon.name + " value: "+ weapon.value);
-//    // add wepon button to items 
-//    
-//    $("#items").append(weapon.getImage())
-//    $("#"+this.weapon.uuid).click(function(){
-//        displayOutput("picup weapon");
-//    })
-//    
-//    
-//    
-//}
-////2
-//$("#createItem").click(function(){
-//   createItem(); 
-//});
+function createItem(){
+    
+    // random weapon
+    //constructor(name, desc, value, quality, size, weight, vol, effect, icon, type)
+    var name = "Sword of Truth";
+    var desc = "This is a random sword";
+    var value = Math.floor(Math.random()* 400 +1);
+    var quality = "Random Quality - Poor, Common, Uncommon, Rare, Epic, Legendary";
+    var size = Math.floor(Math.random() * 3 +1);
+    var weight = Math.floor(Math.random() * 2 + 1);
+    var vol = 1;
+    var effect = "Random Effect";
+    var icon = "sword-brandish.png";
+    var type = "weapon";
+    
+    var weapon = new Item(name, desc, value, quality, size, weight, vol, effect, icon, type);
+    
+    displayOutput("Created "+ weapon.name + " value: "+ weapon.value);
+    // add wepon button to items 
+  
+    $("#items").append(weapon.getImage());
+    $("#"+weapon.uuid).click(function(){
+        displayOutput("pickup "+ weapon.name);
+        inv.addItem(weapon);
+    })
+    
+    inv.display();
+    
+    
+}
+//2
+$("#createItem").click(function(){
+   createItem(); 
+   
+});
 
 
 
@@ -179,7 +202,11 @@ function displayOutput(msg){
 
 
 // below here is our app logic so far.
-
+$("#displayInv").click(function(){
+    
+   inv.display(true);
+    
+});
 sword = new Item("A basic sword", "this sword is very rusty", 10, 
                  "poor", 3,1,1,"basic damage", "sword-brandish.png", "weapon");
 
@@ -187,6 +214,7 @@ sword = new Item("A basic sword", "this sword is very rusty", 10,
 potion = new Item("A health potion", "this potion looks green and glows", 150, 'common', 1,1,1,"basic health", "coffee-cup.png", "food");
 
 inv = new Inv("bag", 10,10,10);
+
 inv.addItem(sword);
 inv.addItem(potion);
 inv.display();
