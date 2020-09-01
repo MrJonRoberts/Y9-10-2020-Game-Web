@@ -34,6 +34,7 @@ class Item{
     effect;
     icon;
     type;
+    uuid;
    
     constructor(name, desc, value, quality, size, weight, vol, effect, icon, type){
         this.name = name;
@@ -45,13 +46,23 @@ class Item{
         this.vol = vol;
         this.effect = effect;
         this.icon = icon;
-        this.type = type;  
+        this.type = type; 
+        this.uuid = this.guid();
        
         displayOutput("Created "+ this.name);
         
         
     }
+    guid(){
+        return    'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
+        var r = Math.random() * 16 | 0, v = c == 'x' ? r : (r & 0x3 | 0x8);
+        return v.toString(16);
+    });
+    }
     
+     getImage(){
+       return "<img class='icon' id='' width='25px' src='images/icons/"+this.type + "/"+this.icon + ">"
+   }
     
  }
 
@@ -65,6 +76,7 @@ class Inv{
     curSize;
     curWeight;
     curVol;
+    
     
     constructor(name, maxSize, maxCapacity, maxWeight){
         this.name = name;
@@ -103,7 +115,7 @@ class Inv{
        if (this.items.length != 0){
            dispalyStr += "<ul>";
            for (var i = 0; i < this.items.length; i++){
-               dispalyStr += "<li>"+ this.items[i].name + "</li>";
+               dispalyStr += "<li>"+    this.getImage() + " "+ this.items[i].name + "</li>";
            }
            dispalyStr += "</ul>";
        }
@@ -111,7 +123,9 @@ class Inv{
        displayOutput(dispalyStr)
    }
     
+  
     
+   
 }
 
 
@@ -119,6 +133,52 @@ function displayOutput(msg){
     console.log(msg);
     $("#message").append(msg + "<br/>");
 }
+
+
+// add click event to run a function on our button.
+// 1.  function to run
+// 2.  add function to events.
+//1
+function createItem(){
+    displayOutput("Creating Item");
+    
+    // random weapon
+    //constructor(name, desc, value, quality, size, weight, vol, effect, icon, type)
+    var name = "Sword of Truth";
+    var desc = "This is a random sword";
+    var value = Math.floor(Math.random()* 400 +1);
+    var quality = "Random Quality - Poor, Common, Uncommon, Rare, Epic, Legendary";
+    var size = Math.floor(Math.random() * 3 +1);
+    var weight = Math.floor(Math.random() * 2 + 1);
+    var vol = 1;
+    var effect = "Random Effect";
+    var icon = "sword-brandish.png";
+    var type = "weapon";
+    
+    var weapon = new Item(name, desc, value, quality, size, weapon, vol, effect, icon, type);
+    
+    displayOutput("Created "+ weapon.name + " value: "+ weapon.value);
+    // add wepon button to items 
+    
+    $("#items").append(weapon.getImage())
+    $("#"+this.weapon.uuid).click(function(){
+        displayOutput("picup weapon");
+    })
+    
+    
+    
+}
+//2
+$("#createItem").click(function(){
+   createItem(); 
+});
+
+
+
+
+
+
+// below here is our app logic so far.
 
 sword = new Item("A basic sword", "this sword is very rusty", 10, 
                  "poor", 3,1,1,"basic damage", "sword-brandish.png", "weapon");
