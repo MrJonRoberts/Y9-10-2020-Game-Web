@@ -3,3 +3,7 @@
     font-family: sans-serif;
     color: white;
 }
+
+canvas {
+    padding-left: 100px;
+}
