@@ -53,10 +53,12 @@ body {
 }
 
 
-
-
+/* arrows */
+.arrow {
+    display: inline-block;
+}
 #left_c {
-  display: inline-block; 
+   
       -webkit-transform:rotate(270deg);
   -moz-transform: rotate(270deg);
   -ms-transform: rotate(270deg);
@@ -67,7 +69,7 @@ body {
     
 }
 #right_c {
-  display: inline-block; 
+  
       -webkit-transform:rotate(90deg);
   -moz-transform: rotate(90deg);
   -ms-transform: rotate(90deg);
@@ -78,14 +80,14 @@ body {
     
 }
 #up_c {
-  display: inline-block;
+ 
    
     width: 50px;
     height: 50px;
     
 }
 #down_c {
-  display: inline-block; 
+  
     -webkit-transform:rotate(180deg);
   -moz-transform: rotate(180deg);
   -ms-transform: rotate(180deg);
