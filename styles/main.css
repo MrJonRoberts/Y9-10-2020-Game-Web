@@ -3,3 +3,96 @@
     font-family: sans-serif;
     color: white;
 }
+
+.left {
+    text-align: left;
+    float: left;
+     max-width: 100px;
+    min-width: 75px;
+    background-color: darkgrey;
+    height: 100%;
+}
+
+.right {
+    float: right;
+    text-align: right;
+    max-width: 100px;
+    min-width: 75px;
+    background-color: darkgrey;
+    height: 100%;
+}
+
+.centered {
+    padding-top: 30px;
+    text-align: center;
+    height: 90%;
+    background-color: aliceblue;
+    min-width: 550px;
+}
+#footer {
+    margin-left: auto;
+    width: 95%;
+    margin-right: auto;
+}
+body {
+     background-color: darkgrey;
+    font-family: sans-serif;
+    
+}
+
+
+#myProgress {
+  width: 100%;
+  background-color: #ddd;
+}
+
+#myBar {
+  width: 1%;
+  height: 10px;
+  background-color: #FF0000;
+}
+
+
+
+
+#left_c {
+  display: inline-block; 
+      -webkit-transform:rotate(270deg);
+  -moz-transform: rotate(270deg);
+  -ms-transform: rotate(270deg);
+  -o-transform: rotate(270deg);
+  transform: rotate(270deg);
+    width: 50px;
+    height: 50px;
+    
+}
+#right_c {
+  display: inline-block; 
+      -webkit-transform:rotate(90deg);
+  -moz-transform: rotate(90deg);
+  -ms-transform: rotate(90deg);
+  -o-transform: rotate(90deg);
+  transform: rotate(90deg);
+    width: 50px;
+    height: 50px;
+    
+}
+#up_c {
+  display: inline-block;
+   
+    width: 50px;
+    height: 50px;
+    
+}
+#down_c {
+  display: inline-block; 
+    -webkit-transform:rotate(180deg);
+  -moz-transform: rotate(180deg);
+  -ms-transform: rotate(180deg);
+  -o-transform: rotate(180deg);
+  transform: rotate(180deg);
+   
+    width: 50px;
+    height: 50px;
+    
+}
